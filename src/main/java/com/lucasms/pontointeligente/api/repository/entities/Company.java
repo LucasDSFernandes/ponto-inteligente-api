@@ -1,4 +1,4 @@
-package com.lucasms.pontointeligente.api.entities;
+package com.lucasms.pontointeligente.api.repository.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -36,13 +36,13 @@ public class Company implements Serializable{
 	@Column(name="nr_cnpj", nullable = false)
 	private String numberCnpj;
 	
-	@Column(name="data_criacao")
+	@Column(name="dt_criacao")
 	private LocalDateTime dateCriation;
 	
-	@Column(name="data_atualizacao")
+	@Column(name="dt_atualizacao")
 	private LocalDateTime dateUpdate;
 	
-	@OneToMany(mappedBy = "Employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "company", targetEntity = Employee.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Employee> employee;
 
 	public Long getId() {

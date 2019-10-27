@@ -1,4 +1,4 @@
-package com.lucasms.pontointeligente.api.entities;
+package com.lucasms.pontointeligente.api.repository.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -9,7 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class Timekeeping implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = LoggerFactory.getLogger(Employee.class);
+	private static Logger logger = LoggerFactory.getLogger(Timekeeping.class);
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -37,13 +38,14 @@ public class Timekeeping implements Serializable{
 	@Column(name="localizacao")
 	private String location;
 	
-	@Column(name="data_criacao")
+	@Column(name="dt_criacao")
 	private LocalDateTime dateCriation;
 	
-	@Column(name="data_atualizacao")
+	@Column(name="dt_atualizacao")
 	private LocalDateTime dateUpdate;
 	
-	@ManyToMany(fetch= FetchType.EAGER)
+	@ManyToOne(fetch= FetchType.EAGER)
+	@JoinColumn(name = "id_funcionario")
 	private Employee employee;
 
 	public Long getId() {

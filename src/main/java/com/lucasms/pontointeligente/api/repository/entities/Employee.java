@@ -1,4 +1,4 @@
-package com.lucasms.pontointeligente.api.entities;
+package com.lucasms.pontointeligente.api.repository.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,7 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,17 +29,15 @@ import com.lucasms.pontointeligente.api.enums.ProfileEnums;
 public class Employee implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
-
+	
 	private static Logger logger = LoggerFactory.getLogger(Employee.class);
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_func")
+	@Column(name="id_funcionario")
 	private Long id;
 	
-	@Column(name="nm_func", nullable = false)
+	@Column(name="nm_funcionario", nullable = false)
 	private String nameEmployee;
 	
 	@Column(name="email", nullable = false)
@@ -50,7 +49,7 @@ public class Employee implements Serializable{
 	@Column(name="nr_cpf", nullable = false)
 	private String numerCpf;
 
-	@Column(name="valorHora")
+	@Column(name="vlHora")
 	private BigDecimal timeValue;
 	
 	@Column(name="qt_hr_trab_dia")
@@ -60,16 +59,17 @@ public class Employee implements Serializable{
 	@Column(name="tp_perfil", nullable = false)
 	private ProfileEnums typeProfile;
 
-	@Column(name="data_criacao")
+	@Column(name="dt_criacao")
 	private LocalDateTime dateCriation;
 	
-	@Column(name="data_atualizacao")
+	@Column(name="dt_atualizacao")
 	private LocalDateTime dateUpdate;
 
-	@ManyToMany(fetch= FetchType.EAGER)
+	@ManyToOne(fetch= FetchType.EAGER)
+	@JoinColumn(name = "id_empresa")
 	private Company company;
 
-	@OneToMany(mappedBy = "TimeKeeping", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", targetEntity = Timekeeping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Timekeeping> timekeeping;
 
 	public Long getId() {
