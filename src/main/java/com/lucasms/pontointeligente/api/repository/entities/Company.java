@@ -45,6 +45,10 @@ public class Company implements Serializable{
 	@OneToMany(mappedBy = "company", targetEntity = Employee.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Employee> employee;
 
+	public Company(){
+		setDateUpdate(LocalDateTime.now());
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -47,7 +47,7 @@ public class Employee implements Serializable{
 	private String password;
 	
 	@Column(name="nr_cpf", nullable = false)
-	private String numerCpf;
+	private String numberCpf;
 
 	@Column(name="vlHora")
 	private BigDecimal timeValue;
@@ -72,6 +72,11 @@ public class Employee implements Serializable{
 	@OneToMany(mappedBy = "employee", targetEntity = Timekeeping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Timekeeping> timekeeping;
 
+	public Employee() {
+		setDateUpdate(LocalDateTime.now());
+		setDateCriation(LocalDateTime.now());
+
+	}
 	public Long getId() {
 		return id;
 	}
@@ -104,12 +109,12 @@ public class Employee implements Serializable{
 		this.password = password;
 	}
 
-	public String getNumerCpf() {
-		return numerCpf;
+	public String getNumberCpf() {
+		return numberCpf;
 	}
 
-	public void setNumerCpf(String numerCpf) {
-		this.numerCpf = numerCpf;
+	public void setNumberCpf(String numberCpf) {
+		this.numberCpf = numberCpf;
 	}
 
 	public BigDecimal getTimeValue() {
@@ -169,6 +174,6 @@ public class Employee implements Serializable{
 	}
 	
 	public void writeLog() {
-		logger.info("Funcionario [id = {} , nome = '{}' , CPF = {} ]", id, nameEmployee, numerCpf);
+		logger.info("Funcionario [id = {} , nome = '{}' , CPF = {} ]", id, nameEmployee, numberCpf);
 	}
 }
